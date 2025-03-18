@@ -32,7 +32,7 @@ For detailed project information, visit the [Meta Developers Documentation](http
   - Tested with Unity **`2022.3.58f1`** and **`6000.0.38f1`**.
   - Older minor versions may work but are not fully validated.
 - **Packages / Dependencies:**
-  - [**`Meta MRUK`**](https://assetstore.unity.com/packages/tools/integration/meta-mr-utility-kit-272450?srsltid=AfmBOorj1QQDtt7_6vcIWgu0Tw2Q8YLTQB3hRN5QHORRmjaj8sUEmrkv) (com.meta.xr.mrutilitykit, v72.0.0)
+  - [**`Meta MRUK`**](https://assetstore.unity.com/packages/tools/integration/meta-mr-utility-kit-272450?srsltid=AfmBOorj1QQDtt7_6vcIWgu0Tw2Q8YLTQB3hRN5QHORRmjaj8sUEmrkv) (com.meta.xr.mrutilitykit, v74.0.0 or higher)
   - [**`Unity Sentis`**](https://unity.com/sentis) (com.unity.sentis, v2.1.1)
 
 > [!IMPORTANT]
@@ -222,7 +222,7 @@ Unity Sentis offers a framework to load models from popular open-source platform
 - **Devices:** Quest 3 / 3S
 - **Permissions:** Grant Camera and Spatial Data permissions
 - **Unity:** 2022.3.58f1 with Sentis package 2.1.1 (com.unity.sentis)
-- **MR Utility Kit:** v72.0.0 (MRUK)
+- **MR Utility Kit (MRUK):** v74.0.0 or higher
 
 ## Known Issues
 
