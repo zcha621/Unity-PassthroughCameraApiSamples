@@ -35,6 +35,9 @@ For detailed project information, visit the [Meta Developers Documentation](http
   - [**`Meta MRUK`**](https://assetstore.unity.com/packages/tools/integration/meta-mr-utility-kit-272450?srsltid=AfmBOorj1QQDtt7_6vcIWgu0Tw2Q8YLTQB3hRN5QHORRmjaj8sUEmrkv) (com.meta.xr.mrutilitykit, v72.0.0)
   - [**`Unity Sentis`**](https://unity.com/sentis) (com.unity.sentis, v2.1.1)
 
+> [!IMPORTANT]
+> When updating the project to **`Unity 6`**, the Android Manifest will need to be updated. Find more information in our [Troubleshooting guide](#troubleshooting--known-issues) below.
+
 ### Hardware
 
 - **Meta Quest Devices:**
@@ -177,6 +180,12 @@ To learn more about the capabilities of **`PassthroughCameraUtils`** class, refe
   Since performance and behavior may vary, thoroughly test your implementation on the target Quest hardware (Quest 3/3S running Horizon OS v74 or later) to ensure optimal performance and compatibility. Meta XR Simulator and Meta Link app are currently not supported.
 
 ## Troubleshooting & Known Issues
+
+* **Upgrading to Unity 6:**
+   - When updating the project to **`Unity 6`**, the Android Manifest will need to be updated. This can be done either manually or by using one of two Meta tools, **Meta** > **Tools** > **Update AndroidManiest.xml** or **Meta** > **Tools** > **Create store-compatible AndroidManiest.xml**.
+
+> [!IMPORTANT]
+> The `horizonos.permission.HEADSET_CAMERA` permission has to be added back into the Manifest manually after updating.
 
 * **App cannot be accessed after denying all permissions:**
    - Currently, if users click on **Don't Allow** for all permissions, they are unable to access the app even after changing Settings in the device.
