@@ -84,6 +84,12 @@ namespace PassthroughCameraSamples
 
         private IEnumerator InitializeWebCamTexture()
         {
+#if !UNITY_6000_OR_NEWER
+            // There is a bug on Unity 2022 that causes a crash if you don't wait a frame before initializing the WebCamTexture.
+            // Waiting for one frame is important and prevents the bug.
+            yield return new WaitForEndOfFrame();
+#endif
+
             while (true)
             {
                 var devices = WebCamTexture.devices;
@@ -102,11 +108,6 @@ namespace PassthroughCameraSamples
                         {
                             webCamTexture = new WebCamTexture(deviceName, RequestedResolution.x, RequestedResolution.y);
                         }
-                        // There is a bug in the current implementation of WebCamTexture: if 'Play()' is called at the same frame the WebCamTexture was created, this error is logged and the WebCamTexture object doesn't work:
-                        //     Camera2: SecurityException java.lang.SecurityException: validateClientPermissionsLocked:1325: Callers from device user 0 are not currently allowed to connect to camera "66"
-                        //     Camera2: Timeout waiting to open camera.
-                        // Waiting for one frame is important and prevents the bug.
-                        yield return null;
                         webCamTexture.Play();
                         var currentResolution = new Vector2Int(webCamTexture.width, webCamTexture.height);
                         if (RequestedResolution != Vector2Int.zero && RequestedResolution != currentResolution)
