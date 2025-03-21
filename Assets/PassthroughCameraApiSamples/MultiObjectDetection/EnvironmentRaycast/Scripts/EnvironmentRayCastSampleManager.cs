@@ -18,6 +18,14 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         public Transform Camera;
         public EnvironmentRaycastManager RaycastManager;
 
+        private void Start()
+        {
+            if (!EnvironmentRaycastManager.IsSupported)
+            {
+                Debug.LogError("EnvironmentRaycastManager is not supported: please read the official documentation to get more details. (https://developers.meta.com/horizon/documentation/unity/unity-depthapi-overview/)");
+            }
+        }
+
         public bool HasScenePermission()
         {
 #if UNITY_ANDROID
@@ -29,18 +37,30 @@ namespace PassthroughCameraSamples.MultiObjectDetection
 
         public Transform PlaceGameObject(Vector3 cameraPosition)
         {
-            transform.position = Camera.position;
-            transform.LookAt(cameraPosition);
-
-            var ray = new Ray(Camera.position, transform.forward);
-            if (RaycastManager.Raycast(ray, out var hitInfo))
+            if (EnvironmentRaycastManager.IsSupported)
             {
-                transform.SetPositionAndRotation(
-                    hitInfo.point,
-                    Quaternion.LookRotation(hitInfo.normal, Vector3.up));
-            }
+                transform.position = Camera.position;
+                transform.LookAt(cameraPosition);
 
-            return transform;
+                var ray = new Ray(Camera.position, transform.forward);
+                if (RaycastManager.Raycast(ray, out var hitInfo))
+                {
+                    transform.SetPositionAndRotation(
+                        hitInfo.point,
+                        Quaternion.LookRotation(hitInfo.normal, Vector3.up));
+                }
+                else
+                {
+                    Debug.Log("RaycastManager failed");
+                }
+
+                return transform;
+            }
+            else
+            {
+                Debug.LogError("EnvironmentRaycastManager is not supported");
+                return null;
+            }
         }
     }
 }

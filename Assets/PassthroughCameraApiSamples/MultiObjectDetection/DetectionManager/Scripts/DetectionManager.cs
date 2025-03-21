@@ -117,7 +117,6 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         /// </summary>
         private void SpwanCurrentDetectedObjects()
         {
-            m_placeSound.Play();
             var count = 0;
             foreach (var box in m_uiInference.BoxDrawn)
             {
@@ -125,6 +124,11 @@ namespace PassthroughCameraSamples.MultiObjectDetection
                 {
                     count++;
                 }
+            }
+            if (count > 0)
+            {
+                // Play sound if a new marker is placed.
+                m_placeSound.Play();
             }
             OnObjectsIdentified?.Invoke(count);
         }
@@ -136,6 +140,10 @@ namespace PassthroughCameraSamples.MultiObjectDetection
         {
             // Get the real transform using DepthApi
             var markerTransform = m_environmentRaycast.PlaceGameObject(boxWorldPos);
+            if (!markerTransform)
+            {
+                return false;
+            }
 
             // Check if you spanwed the same object before
             var existMarker = false;
