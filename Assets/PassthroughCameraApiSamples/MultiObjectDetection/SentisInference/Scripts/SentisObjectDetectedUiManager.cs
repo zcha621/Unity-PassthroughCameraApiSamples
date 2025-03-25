@@ -50,10 +50,13 @@ namespace PassthroughCameraSamples.MultiObjectDetection
 
         private void Update()
         {
-            var cameraPose = PassthroughCameraUtils.GetCameraPoseInWorld(CameraEye);
-            // Position the canvas in front of the camera
-            m_detectionCanvas.transform.position = cameraPose.position + cameraPose.rotation * Vector3.forward * m_canvasDistance;
-            m_detectionCanvas.transform.rotation = Quaternion.Euler(0, cameraPose.rotation.eulerAngles.y, 0);
+            if (m_webCamTextureManager.WebCamTexture != null)
+            {
+                var cameraPose = PassthroughCameraUtils.GetCameraPoseInWorld(CameraEye);
+                // Position the canvas in front of the camera
+                m_detectionCanvas.transform.position = cameraPose.position + cameraPose.rotation * Vector3.forward * m_canvasDistance;
+                m_detectionCanvas.transform.rotation = Quaternion.Euler(0, cameraPose.rotation.eulerAngles.y, 0);
+            }
         }
     }
 }
