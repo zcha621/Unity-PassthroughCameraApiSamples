@@ -14,14 +14,9 @@ This sample demonstrates how developers can use Camera 2 API to:
 1. Stop and re-start a camera device
 
 ## Known Issues
-1. *Permissions* - this version of the XrCamera sample uses the standard Android Camera permission and that permission needs to be granted via ADB after the app is installed to a device using these commands:
+1. *Permissions* - this version of the XrCamera sample uses the standard Android Camera permission and that permission needs to be granted manually in system settings. You can locate the camera permission in this path: Settings > Privacy & Safety > App Permissions > Headset Cameras. Toggle the camera permission to "XRCamera Sample" to enable camera access.
 
-    ```
-    adb root
-    adb shell pm grant com.oculus.sdk.xrcamera android.permission.CAMERA
-    ```
-
-1. Close the sample using the _Exit_ button rather than closing it via shell to make sure that the camera resources are torn down properly. This is an issue in the sample framework and not in the Camera 2 implemention itself.
+2. Close the sample using the _Exit_ button rather than closing it via shell to make sure that the camera resources are torn down properly. This is an issue in the sample framework and not in the Camera 2 implemention itself.
 
 ## Build with CMake on Android Studio
 1. If this is the first time you are launching Android Studio, select Open an existing Android Studio project. If you have launched Android Studio before, click File > Open instead.
