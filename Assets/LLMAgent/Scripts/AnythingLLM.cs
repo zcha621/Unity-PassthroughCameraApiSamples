@@ -1,11 +1,19 @@
+
+/* Unmerged change from project 'Assembly-CSharp.Player'
+Before:
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections;
-using TMPro;
-using Meta.WitAi.TTS.Utilities;
-using System.Text.RegularExpressions;
+After:
 using System;
+using System.Networking;
+*/
+using System.Collections;
+using System.Text.RegularExpressions;
 using Meta.WitAi.TTS.Data;
+using Meta.WitAi.TTS.Utilities;
+using TMPro;
+using UnityEngine;
+using UnityEngine.Networking;
 
 public class AnythingLLM : MonoBehaviour
 {
@@ -46,7 +54,7 @@ public class AnythingLLM : MonoBehaviour
         isWaitingForResponse = true;
         isSpeaking = false;
 
-       
+
         // Clear any previous timing info
         UpdateTimerDisplay();
 
@@ -108,7 +116,7 @@ public class AnythingLLM : MonoBehaviour
                         speaker.Events.OnComplete.AddListener(OnSpeakingComplete);
                         isSpeaking = true;
                         speaker.Speak(textResponse);
-                        
+
 
                     }
                     else
