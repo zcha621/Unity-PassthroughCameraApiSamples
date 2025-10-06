@@ -1,24 +1,27 @@
-
-/* Unmerged change from project 'Assembly-CSharp.Player'
-Before:
-using UnityEngine;
-using UnityEngine.Networking;
-After:
-using System;
-using System.Networking;
-*/
 using System.Collections;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Meta.Voice.Samples.Dictation;
 using Meta.WitAi.TTS.Data;
 using Meta.WitAi.TTS.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
+// Custom certificate handler to allow insecure connections for development
+public class AcceptAllCertificatesSignedWithASpecificKeyPublicKey : CertificateHandler
+{
+    protected override bool ValidateCertificate(byte[] certificateData)
+    {
+        // Always return true to accept all certificates (for development only)
+        return true;
+    }
+}
+
 public class AnythingLLM : MonoBehaviour
 {
     [Header("LLM Settings")]
-    public string apiUrl = "http://localhost:3001/api/v1/chat"; // change if deployed remotely
+    public string apiUrl = "http://130.216.208.87:3001/api/v1/workspace/agent0/chat"; // Updated URL
     public string apiKey = "your_api_key_if_needed"; // leave blank if not used
 
     [Header("UI")]
@@ -28,6 +31,7 @@ public class AnythingLLM : MonoBehaviour
 
     [Header("Voice SDK Components")]
     public TTSSpeaker speaker; // Reference to the TTS speaker component
+    public DictationActivation dictationActivator; // Reference to the DictationActivation component
 
     // Timer variables
     private float requestStartTime;
@@ -37,7 +41,16 @@ public class AnythingLLM : MonoBehaviour
     private bool isSpeaking = false;
     private float speakingStartTime;
 
-
+    private void Start()
+    {
+        // Log a warning about HTTP connections
+        Debug.LogWarning("Using HTTP connection. For production, ensure the following Unity Player Settings are configured:");
+        Debug.LogWarning("1. Go to Edit > Project Settings > Player > Publishing Settings > Configuration");
+        Debug.LogWarning("2. Set 'Internet Client Server Capability' if on UWP");
+        Debug.LogWarning("3. For WebGL: Ensure CORS is properly configured on the server");
+        Debug.LogWarning("4. Consider using HTTPS for production deployments");
+    }
+    
     private void Update()
     {
         // Update the timer text if waiting for response
@@ -45,8 +58,18 @@ public class AnythingLLM : MonoBehaviour
         {
             UpdateTimerDisplay();
         }
+        if(Input.GetKeyDown(KeyCode.Space) || OVRInput.GetDown(OVRInput.Button.One))
+        {
+            dictationActivator.ToggleActivation();
+        }
+        
     }
-
+    public void UpdateTranscripts(string transcript)
+    {
+        userInputField.text = transcript;
+        Debug.Log(transcript);
+        SendPrompt();
+    }
     public void SendPrompt()
     {
         // Start the timer when sending the request
@@ -61,24 +84,53 @@ public class AnythingLLM : MonoBehaviour
         string prompt = userInputField.text;
         StartCoroutine(SendLLMRequest(prompt));
     }
-
+    
     IEnumerator SendLLMRequest(string prompt)
     {
         // Construct the JSON payload
         string jsonPayload = JsonUtility.ToJson(new PromptData { message = prompt });
 
-        // Create a UnityWebRequest
-        UnityWebRequest request = new UnityWebRequest(apiUrl, "POST");
+        // Create WWWForm to help with HTTP handling
+        WWWForm form = new WWWForm();
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonPayload);
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = new DownloadHandlerBuffer();
+        
+        // Try different UnityWebRequest construction methods
+        UnityWebRequest request;
+        
+        // Method 1: Try with UnityWebRequest.Put which sometimes works better with HTTP
+        try
+        {
+            request = UnityWebRequest.Put(apiUrl, bodyRaw);
+            request.method = "POST"; // Override method to POST
+            request.SetRequestHeader("Content-Type", "application/json");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to create request with PUT method: " + e.Message);
+            // Fallback to basic constructor
+            request = new UnityWebRequest(apiUrl, "POST");
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+        }
+        
+        // Add certificate handler to allow insecure connections
+        request.certificateHandler = new AcceptAllCertificatesSignedWithASpecificKeyPublicKey();
+        request.disposeCertificateHandlerOnDispose = true;
+        
+        // Set timeout to avoid hanging
+        request.timeout = 30;
 
         // Headers
-        request.SetRequestHeader("Content-Type", "application/json");
         if (!string.IsNullOrEmpty(apiKey))
         {
             request.SetRequestHeader("Authorization", $"Bearer {apiKey}");
         }
+
+        // Log the request details for debugging
+        Debug.Log($"Sending request to: {apiUrl}");
+        Debug.Log($"Request method: {request.method}");
+        Debug.Log($"Request payload: {jsonPayload}");
 
         // Send request and wait for response
         yield return request.SendWebRequest();
@@ -87,6 +139,10 @@ public class AnythingLLM : MonoBehaviour
         responseReceivedTime = Time.time;
         isWaitingForResponse = false;
 
+        // Enhanced error reporting
+        Debug.Log($"Request completed with result: {request.result}");
+        Debug.Log($"Response Code: {request.responseCode}");
+        
         if (request.result == UnityWebRequest.Result.Success)
         {
             string responseJson = request.downloadHandler.text;
@@ -96,7 +152,7 @@ public class AnythingLLM : MonoBehaviour
             try
             {
                 // Look for "textResponse":"[content]" pattern
-                string pattern = "\"textResponse\":\"(.*?)\"(?=,)";
+                string pattern = "\"textResponse\":\"(.*?)\"(?=,|\\})";
                 Match match = Regex.Match(responseJson, pattern, RegexOptions.Singleline);
 
                 if (match.Success)
@@ -141,11 +197,33 @@ public class AnythingLLM : MonoBehaviour
         }
         else
         {
-            Debug.LogError("LLM Request Error: " + request.error);
-            responseText.text = $"Error: {request.error}";
-            speakingEndTime = responseReceivedTime; // No speaking, so end time is same as response time
+            // Detailed error reporting
+            string errorMessage = $"LLM Request Failed:\n";
+            errorMessage += $"Result: {request.result}\n";
+            errorMessage += $"Response Code: {request.responseCode}\n";
+            errorMessage += $"Error: {request.error}\n";
+            
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                errorMessage += "\nThis appears to be a connection error. Common causes:\n";
+                errorMessage += "- HTTP connections blocked by Unity security settings\n";
+                errorMessage += "- Network connectivity issues\n";
+                errorMessage += "- Server not responding\n";
+                errorMessage += "- Firewall blocking the connection\n";
+                errorMessage += "\nTo fix HTTP connection issues:\n";
+                errorMessage += "1. Try using HTTPS instead of HTTP\n";
+                errorMessage += "2. Check Unity Player Settings for network permissions\n";
+                errorMessage += "3. Verify the server is accessible from your network\n";
+            }
+            
+            Debug.LogError(errorMessage);
+            responseText.text = $"Connection Error: {request.error}\nSee Console for details.";
+            speakingEndTime = responseReceivedTime;
         }
 
+        // Clean up
+        request.Dispose();
+        
         // Update the display with the final response time
         UpdateTimerDisplay();
     }

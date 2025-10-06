@@ -6,7 +6,7 @@ using Meta.XR.Samples;
 using UnityEngine;
 using UnityEngine.Assertions;
 using PCD = PassthroughCameraSamples.PassthroughCameraDebugger;
-
+using UnityEngine.Events;
 namespace PassthroughCameraSamples
 {
     [MetaCodeSample("PassthroughCameraApiSamples-PassthroughCamera")]

@@ -302,15 +302,30 @@ MonoBehaviour:
         value: true
     versionTags: []
     voices:
+    - name: billie
+      locale: en_US
+      gender: female
+      styles: []
+      supported_features: []
+    - name: bru
+      locale: en_US
+      gender: male
+      styles: []
+      supported_features: []
+    - name: dungeon
+      locale: en_US
+      gender: male
+      styles: []
+      supported_features: []
     - name: en_NZ.1
       locale: en_NZ
       gender: male
       styles:
       - default
       - soft
-      - projected
-      - fast
       - formal
+      - fast
+      - projected
       supported_features:
       - style
       - pitch
@@ -325,9 +340,9 @@ MonoBehaviour:
       styles:
       - default
       - soft
-      - projected
-      - fast
       - formal
+      - fast
+      - projected
       supported_features:
       - style
       - pitch
@@ -338,13 +353,13 @@ MonoBehaviour:
       - word_events
     - name: en_US.44
       locale: en_US
-      gender: unkown
+      gender: male
       styles:
       - default
       - soft
-      - projected
-      - fast
       - formal
+      - fast
+      - projected
       supported_features:
       - style
       - pitch
@@ -355,13 +370,13 @@ MonoBehaviour:
       - word_events
     - name: en_US.45
       locale: en_US
-      gender: unkown
+      gender: male
       styles:
       - default
       - soft
-      - projected
-      - fast
       - formal
+      - fast
+      - projected
       supported_features:
       - style
       - pitch
@@ -372,13 +387,13 @@ MonoBehaviour:
       - word_events
     - name: en_US.46
       locale: en_US
-      gender: unkown
+      gender: male
       styles:
       - default
       - soft
-      - projected
-      - fast
       - formal
+      - fast
+      - projected
       supported_features:
       - style
       - pitch
@@ -389,13 +404,13 @@ MonoBehaviour:
       - word_events
     - name: en_US.47
       locale: en_US
-      gender: unkown
+      gender: male
       styles:
       - default
       - soft
-      - projected
-      - fast
       - formal
+      - fast
+      - projected
       supported_features:
       - style
       - pitch
@@ -406,13 +421,13 @@ MonoBehaviour:
       - word_events
     - name: en_US.48
       locale: en_US
-      gender: unkown
+      gender: male
       styles:
       - default
       - soft
-      - projected
-      - fast
       - formal
+      - fast
+      - projected
       supported_features:
       - style
       - pitch
@@ -423,13 +438,13 @@ MonoBehaviour:
       - word_events
     - name: en_US.49
       locale: en_US
-      gender: unkown
+      gender: male
       styles:
       - default
       - soft
-      - projected
-      - fast
       - formal
+      - fast
+      - projected
       supported_features:
       - style
       - pitch
@@ -438,15 +453,20 @@ MonoBehaviour:
       - viseme_events
       - phoneme_events
       - word_events
+    - name: jane_austen
+      locale: en_GB
+      gender: female
+      styles: []
+      supported_features: []
     - name: Maria
       locale: es_ES
       gender: female
       styles:
       - default
       - soft
-      - projected
-      - fast
       - formal
+      - fast
+      - projected
       supported_features:
       - style
       - pitch
@@ -461,9 +481,9 @@ MonoBehaviour:
       styles:
       - default
       - soft
-      - projected
-      - fast
       - formal
+      - fast
+      - projected
       supported_features:
       - style
       - pitch
@@ -977,6 +997,11 @@ MonoBehaviour:
       - viseme_events
       - phoneme_events
       - word_events
+    - name: zach
+      locale: en_US
+      gender: male
+      styles: []
+      supported_features: []
   _configData:
   - {fileID: 4177701347010119388}
   _configurationId: 5590062a-e416-4f45-9b31-d335245abbf9

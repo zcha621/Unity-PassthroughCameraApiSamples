@@ -6,26 +6,56 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/PassthroughCameraApiSamples/StartScene/StartScene.unity
-    guid: 69e1b31c45bac42f88f75017ee404de1
+    path: Assets/SamplesResources/Scenes/0-Splash.unity
+    guid: 7238041e8d31f4d439b8851a5d4bb6fa
   - enabled: 1
-    path: Assets/PassthroughCameraApiSamples/CameraViewer/CameraViewer.unity
-    guid: ad5bb12b10679b840999aa322aa7a491
+    path: Assets/SamplesResources/Scenes/1-Menu.unity
+    guid: 1763269b9427b4a44957006a02f06c30
   - enabled: 1
-    path: Assets/PassthroughCameraApiSamples/CameraToWorld/CameraToWorld.unity
-    guid: 756785b371a4f49438b7e2148816e892
+    path: Assets/SamplesResources/Scenes/2-Loading.unity
+    guid: 22b8f383624ec49ef986b9155d212ac1
   - enabled: 1
-    path: Assets/PassthroughCameraApiSamples/BrightnessEstimation/BrightnessEstimation.unity
-    guid: 8ea13e682474e1748965f8e21972f2b2
+    path: Assets/SamplesResources/Scenes/3-CloudReco.unity
+    guid: e434bc354d6d54b899b4fbf77b3118a3
   - enabled: 1
-    path: Assets/PassthroughCameraApiSamples/MultiObjectDetection/MultiObjectDetection.unity
-    guid: 20c230cce46443841b5727b1d6100bfc
+    path: Assets/SamplesResources/Scenes/3-CylinderTargets.unity
+    guid: b336b80db71704028995a1ea175dad4a
   - enabled: 1
-    path: Assets/PassthroughCameraApiSamples/ShaderSample/ShaderSample.unity
-    guid: 708e8dca6055146b28afe2481f141457
+    path: Assets/SamplesResources/Scenes/3-GroundPlane.unity
+    guid: bb0581d54f59940a2932e9d2ccd368c6
+  - enabled: 1
+    path: Assets/SamplesResources/Scenes/3-MidAir.unity
+    guid: 4576f77d2a2354874a494c56189a9e2a
+  - enabled: 1
+    path: Assets/SamplesResources/Scenes/3-ImageTargets.unity
+    guid: fa05b4f596c584dc79960294a1b601cc
+  - enabled: 1
+    path: Assets/SamplesResources/Scenes/3-InstantImageTargets.unity
+    guid: c5307160f41714abb9298e78253ae9b0
+  - enabled: 1
+    path: Assets/SamplesResources/Scenes/3-ModelTargetsStandard.unity
+    guid: 089521e68f58a45089e8e648a98c2e2b
+  - enabled: 1
+    path: Assets/SamplesResources/Scenes/3-ModelTargetsAdvanced.unity
+    guid: 2a35bde7bbb01499a82f7c9ec70afc87
+  - enabled: 1
+    path: Assets/SamplesResources/Scenes/3-MultiTargets.unity
+    guid: d5e3b9c64d95e4105b0f8c39cd4dc3bd
+  - enabled: 1
+    path: Assets/SamplesResources/Scenes/3-VuMarks.unity
+    guid: d9b53b25a285640cf8ac170a80603e34
+  - enabled: 1
+    path: Assets/SamplesResources/Scenes/3-AreaTargets.unity
+    guid: eb08e97b540d54200ad302963f545c64
+  - enabled: 1
+    path: Assets/SamplesResources/Scenes/3-AreaTargetCapture.unity
+    guid: 8cc2a4f7dab81424bb840719430ee097
+  - enabled: 1
+    path: Assets/SamplesResources/Scenes/3-Barcodes.unity
+    guid: a3102d51f16474e8986f86570e9bed1f
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f2bf97b3acdb64248a707c407c9fc54e, type: 2}
-    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 808ab03635d49bd4a80b8e8d2766e886, type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a971eac5e950046e586c5e153e32d05c, type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 2ad3dc5d44f7798479d342d51fba4253, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: a971eac5e950046e586c5e153e32d05c,
+      type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 2ad3dc5d44f7798479d342d51fba4253,
+      type: 2}
   m_UseUCBPForAssetBundles: 0
